@@ -1,0 +1,56 @@
+
+{% extends 'base.html' %}
+{% block title %}Панель отчётов{% endblock %}
+{% block content %}
+<h1 class="mb-3">Панель отчётов</h1>
+<div class="row">
+  <div class="col-md-4">
+    <h5 class="mb-3">Сформировать новый отчёт</h5>
+    <form method="post" class="card card-body">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label">Тип отчёта</label>
+        {{ form.report_type }}
+        <div class="form-text">Дневной, недельный или месячный отчёт.</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Дата окончания периода</label>
+        {{ form.period_to }}
+        <div class="form-text">Отчёт сформируется за период, рассчитанный автоматически.</div>
+      </div>
+      <button class="btn btn-primary w-100">Сформировать отчёт</button>
+    </form>
+  </div>
+  <div class="col-md-8">
+    <h5 class="mb-3">Сформированные отчёты</h5>
+    <table class="table table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Тип</th>
+          <th>Период</th>
+          <th>Создан</th>
+          <th>Файл</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in reports %}
+        <tr>
+          <td>{{ r.get_report_type_display }}</td>
+          <td>{{ r.period_from }} – {{ r.period_to }}</td>
+          <td>{{ r.created_at|date:"d.m.Y H:i" }}</td>
+          <td>
+            {% if r.file %}
+              <a href="{% url 'dashboard:report_download' r.id %}">Скачать</a>
+            {% else %}
+              <span class="text-muted">Нет файла</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4" class="text-center text-muted">Отчёты ещё не формировались.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Документация{% endblock %}
+{% block content %}
+<h1 class="mb-4">Документация и регламенты</h1>
+{% if docs %}
+<table class="table table-striped align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>Название</th>
+      <th>Описание</th>
+      <th>Скачать</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for d in docs %}
+    <tr>
+      <td>{{ d.title }}</td>
+      <td>{{ d.description }}</td>
+      <td>
+        {% if d.file %}
+          <a class="btn btn-sm btn-outline-primary" href="{{ d.file.url }}" download>Скачать</a>
+        {% else %}
+          <span class="text-muted">Файл не загружен</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="text-muted">Документов пока нет.</p>
+{% endif %}
+{% endblock %}
