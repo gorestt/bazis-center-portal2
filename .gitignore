@@ -1,8 +1,6 @@
 # Виртуальное окружение
 .venv/
 
-# SQLite база
-*.sqlite3
 
 # Python кэш
 __pycache__/
