@@ -49,7 +49,7 @@
       <td>{{ o.created_at|date:"d.m.Y H:i" }}</td>
       <td>{{ o.get_priority_display }}</td>
       <td>{{ o.get_status_display }}</td>
-      <td>{{ o.executor or "-" }}</td>
+      <td>{{ o.executor|default:"-" }}</td>
       <td class="text-end">
         <a href="{% url 'dashboard:queue_detail' o.id %}" class="btn btn-sm btn-outline-secondary">Открыть</a>
         <a href="{% url 'dashboard:queue_edit' o.id %}" class="btn btn-sm btn-outline-primary">Редактировать</a>
